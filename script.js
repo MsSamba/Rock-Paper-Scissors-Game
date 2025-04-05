@@ -4,6 +4,12 @@ userResult = document.querySelector(".user-result img");
 cpuResult = document.querySelector(".cpu-result img");
 result = document.querySelector(".result");
 optionImages = document.querySelectorAll(".option-image");
+userScoreElement = document.querySelector(".user-score");
+cpuScoreElement = document.querySelector(".cpu-score");
+resetButton = document.querySelector(".reset-button");
+
+let userScore = 0;
+let cpuScore = 0;
 
 // Loop through each option image element
 
@@ -61,12 +67,35 @@ optionImages.forEach((image, index) => {
               };
             // Look up the outcome value based on user and CPU options
             let outcomeValue = outcomes[userValue + cpuValue];
+
+            // Update scores based on outcome
+            if (outcomeValue === "User") {
+              userScore++;
+              userScoreElement.textContent = userScore;
+          } else if (outcomeValue === "Cpu") {
+              cpuScore++;
+              cpuScoreElement.textContent = cpuScore;
+          }
             
             // Display Result
             result.textContent = userValue === cpuValue ? "Match Draw" : `${outcomeValue} Won!!`;
 
         }, 2000);
     });
+});
+
+
+// Reset game logic
+resetButton.addEventListener("click", () => {
+  userScore = 0;
+  cpuScore = 0;
+  userScoreElement.textContent = userScore;
+  cpuScoreElement.textContent = cpuScore;
+  result.textContent = "Let's Play!!";
+  userResult.src = cpuResult.src = "Images/rock.png";
+  optionImages.forEach((image) => {
+      image.classList.remove("active");
+  });
 });
   
 
